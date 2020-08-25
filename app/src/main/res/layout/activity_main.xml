@@ -27,4 +27,41 @@
         android:src="@drawable/plus"
         android:text="show_dialog" />
 
+    <ImageButton
+        android:id="@+id/btnAddNote2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:background="#fff"
+        android:src="@drawable/plus"
+        android:visibility="gone"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="40dp"
+        android:text="show_dialog" />
+
+    <TextView
+        android:id="@+id/noNotesText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/noNotesDescr"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/bad_script"
+        android:text="There isn't any notes yet."
+        android:textColor="#000"
+        android:textSize="18dp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/noNotesDescr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnAddNote"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/bad_script"
+        android:text="Add new one"
+        android:textColor="#000"
+        android:textSize="18dp"
+        android:visibility="gone" />
+
 </RelativeLayout>
