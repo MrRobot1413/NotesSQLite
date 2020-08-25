@@ -21,21 +21,32 @@
         android:id="@+id/btnAddNote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_centerInParent="true"
         android:background="#fff"
         android:src="@drawable/plus"
-        android:text="show_dialog" />
+        android:text="show_dialog"
+        android:visibility="gone" />
 
     <ImageButton
-        android:id="@+id/btnAddNote2"
+    android:id="@+id/btnAddNote2"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentRight="true"
+    android:background="#fff"
+    android:src="@drawable/plus"
+    android:visibility="gone"
+    android:layout_marginRight="20dp"
+    android:layout_marginTop="40dp"
+    android:text="show_dialog" />
+
+    <ImageButton
+        android:id="@+id/btnDeleteAll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
         android:background="#fff"
-        android:src="@drawable/plus"
-        android:visibility="gone"
-        android:layout_marginRight="20dp"
+        android:src="@drawable/bin"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="40dp"
         android:text="show_dialog" />
 

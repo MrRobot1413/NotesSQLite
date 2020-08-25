@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -22,18 +23,16 @@ import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ImageButton mShowDialog;
-    private AlertDialog.Builder mBuilder;
-    private View mView;
+    private AlertDialog.Builder mBuilder, mBuilder2;
+    private View mView, mView2;
     private TextInputLayout note;
-    private Button btnAdd;
-    private Button btnCancel;
-    private AlertDialog dialog;
+    private Button btnAdd, btnCancel, btnDelete, btnCancel2;
+    private AlertDialog dialog, dialog2;
     private SimpleDateFormat formatter;
     private Date date;
     private TextView noNotesText;
     private TextView noNotesDescr;
-    private ImageButton addImage, addImage2;
+    private ImageButton addImage, addImage2, deleteImage;
     DBHelper dbHelper;
     SQLiteDatabase database;
     ContentValues contentValues;
@@ -53,17 +52,42 @@ public class MainActivity extends AppCompatActivity {
 
         addImage = findViewById(R.id.btnAddNote);
         addImage2 = findViewById(R.id.btnAddNote2);
+        deleteImage = findViewById(R.id.btnDeleteAll);
 
         mBuilder = new AlertDialog.Builder(MainActivity.this);
+        mBuilder2 = new AlertDialog.Builder(MainActivity.this);
         mView = getLayoutInflater().inflate(R.layout.dialog_login, null);
+        mView2 = getLayoutInflater().inflate(R.layout.dialog_delete, null);
         note = mView.findViewById(R.id.noteField);
         btnAdd = mView.findViewById(R.id.btnAdd);
         btnCancel = mView.findViewById(R.id.btnCancel);
+        btnDelete = mView2.findViewById(R.id.btnDelete);
+        btnCancel2 = mView2.findViewById(R.id.btnCancel2);
         mBuilder.setView(mView);
         formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         formatter.setTimeZone(TimeZone.getTimeZone("GMT+3"));
         date = new Date();
         dialog = mBuilder.create();
+        dialog2 = mBuilder2.create();
+        checkIfMoreThanOneNote();
+        deleteImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog2.show();
+                btnDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
+                btnCancel2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog2.dismiss();
+                    }
+                });
+            }
+        });
         if(addImage.getVisibility() == View.VISIBLE){
             addImage.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -114,7 +138,6 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
-        checkIfMoreThanOneNote();
     }
 
     public void delete(){
@@ -122,7 +145,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void checkIfMoreThanOneNote(){
-        if(1 > cursor.getColumnIndex(DBHelper.ID)){
+        if(cursor.getColumnIndex(DBHelper.ID) == -1){
+            addImage.setVisibility(View.VISIBLE);
             noNotesText.setVisibility(View.VISIBLE);
             noNotesDescr.setVisibility(View.VISIBLE);
         } else{
