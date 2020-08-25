@@ -24,14 +24,15 @@ public class DBOperations extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_opers);
-    }
-
-    public void addNote(TextInputLayout note, SimpleDateFormat formatter, Date date){
+        dbHelper = new DBHelper(this);
         database = dbHelper.getWritableDatabase();
         cursor = database.query(DBHelper.TABLE_NAME, null, null, null, null, null, null);
         contentValues = new ContentValues();
-        contentValues.put(DBHelper.NOTE, note.getEditText().getText().toString());
-        contentValues.put(DBHelper.TIME, formatter.format(date));
+    }
+
+    public void addNote(String note, String formatter, Date date){
+        contentValues.put(DBHelper.NOTE, note);
+        contentValues.put(DBHelper.TIME, formatter);
         database.insert(DBHelper.TABLE_NAME, null, contentValues);
     }
 

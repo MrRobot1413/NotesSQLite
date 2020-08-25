@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                         if(note.getEditText().getText().toString().trim().equals("")){
                             Snackbar.make(view, "Field can't be empty", Snackbar.LENGTH_LONG).show();
                         } else{
-                            operations.addNote(note, formatter, date);
+                            operations.addNote(note.getEditText().getText().toString(), formatter.format(date), date);
                         }
                     }
                 });
