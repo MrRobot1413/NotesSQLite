@@ -10,14 +10,15 @@
         android:id="@+id/MyNotes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="30dp"
-        android:textColor="#000"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:text="My notes" />
+        android:fontFamily="@font/bad_script"
+        android:text="My notes"
+        android:textColor="#000"
+        android:textSize="30dp" />
 
     <ImageButton
-        android:id="@+id/btnShowDialog"
+        android:id="@+id/btnAddNote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
