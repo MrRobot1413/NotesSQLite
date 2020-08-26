@@ -2,6 +2,7 @@ package aleksey.git.notessqlite;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -18,7 +19,9 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,10 +36,13 @@ public class MainActivity extends AppCompatActivity {
     private TextView noNotesText;
     private TextView noNotesDescr;
     private ImageButton addImage, addImage2, deleteImage;
+    private RecyclerView NotesList;
     DBHelper dbHelper;
     SQLiteDatabase database;
     ContentValues contentValues;
     Cursor cursor;
+    List<Note> notes = new ArrayList<>();
+    DataAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         addImage2 = findViewById(R.id.btnAddNote2);
         deleteImage = findViewById(R.id.btnDeleteAll);
 
+
         mBuilder = new AlertDialog.Builder(MainActivity.this);
         mBuilder2 = new AlertDialog.Builder(MainActivity.this);
         mView = getLayoutInflater().inflate(R.layout.dialog_login, null);
@@ -64,20 +71,22 @@ public class MainActivity extends AppCompatActivity {
         btnDelete = mView2.findViewById(R.id.btnDelete);
         btnCancel2 = mView2.findViewById(R.id.btnCancel2);
         mBuilder.setView(mView);
+        mBuilder2.setView(mView2);
         formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         formatter.setTimeZone(TimeZone.getTimeZone("GMT+3"));
         date = new Date();
         dialog = mBuilder.create();
         dialog2 = mBuilder2.create();
-        checkIfMoreThanOneNote();
         deleteImage.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View v) {
                 dialog2.show();
                 btnDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        delete();
+                        dialog2.dismiss();
+                        Snackbar.make(v, "All notes deleted successfully", Snackbar.LENGTH_LONG).show();
                     }
                 });
                 btnCancel2.setOnClickListener(new View.OnClickListener() {
@@ -137,25 +146,28 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-
+        setData();
+        NotesList = findViewById(R.id.NotesList);
+        adapter = new DataAdapter(this, notes);
+        NotesList.setAdapter(adapter);
     }
 
     public void delete(){
         database.delete(DBHelper.TABLE_NAME, null, null);
     }
 
-    public void checkIfMoreThanOneNote(){
-        if(cursor.getColumnIndex(DBHelper.ID) == -1){
-            addImage.setVisibility(View.VISIBLE);
-            noNotesText.setVisibility(View.VISIBLE);
-            noNotesDescr.setVisibility(View.VISIBLE);
-        } else{
-            noNotesText.setVisibility(View.GONE);
-            noNotesDescr.setVisibility(View.GONE);
-            addImage.setVisibility(View.GONE);
-            addImage2.setVisibility(View.VISIBLE);
-        }
-    }
+//    public void checkIfMoreThanOneNote(){
+//        if(cursor.getColumnIndex(DBHelper.ID) == -1){
+//            addImage.setVisibility(View.VISIBLE);
+//            noNotesText.setVisibility(View.VISIBLE);
+//            noNotesDescr.setVisibility(View.VISIBLE);
+//        } else{
+//            noNotesText.setVisibility(View.GONE);
+//            noNotesDescr.setVisibility(View.GONE);
+//            addImage.setVisibility(View.GONE);
+//            addImage2.setVisibility(View.VISIBLE);
+//        }
+//    }
 
     public void addNote(){
             contentValues.put(DBHelper.NOTE, note.getEditText().getText().toString());
@@ -167,16 +179,25 @@ public class MainActivity extends AppCompatActivity {
     public void dataToConsole(){
         if (cursor.moveToFirst()) {
             int idIndex = cursor.getColumnIndex(DBHelper.ID);
-            int nameIndex = cursor.getColumnIndex(DBHelper.NOTE);
-            int emailIndex = cursor.getColumnIndex(DBHelper.TIME);
+            int noteIndex = cursor.getColumnIndex(DBHelper.NOTE);
+            int timeIndex = cursor.getColumnIndex(DBHelper.TIME);
             do {
                 Log.d("mLog", "ID = " + cursor.getInt(idIndex) +
-                        ", note = " + cursor.getString(nameIndex) +
-                        ", time = " + cursor.getString(emailIndex));
+                        ", note = " + cursor.getString(noteIndex) +
+                        ", time = " + cursor.getString(timeIndex));
             } while (cursor.moveToNext());
         } else {
             Log.d("mLog", "0 rows");
             cursor.close();
+        }
+    }
+
+    private void setData(){
+        if (cursor.moveToFirst()) {
+            int idIndex = cursor.getColumnIndex(DBHelper.ID);
+            int noteIndex = cursor.getColumnIndex(DBHelper.NOTE);
+            int timeIndex = cursor.getColumnIndex(DBHelper.TIME);
+            notes.add(new Note(cursor.getString(noteIndex), cursor.getString(timeIndex), cursor.getInt(idIndex)));
         }
     }
 }

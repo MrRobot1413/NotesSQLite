@@ -28,16 +28,16 @@
         android:visibility="gone" />
 
     <ImageButton
-    android:id="@+id/btnAddNote2"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentRight="true"
-    android:background="#fff"
-    android:src="@drawable/plus"
-    android:visibility="gone"
-    android:layout_marginRight="20dp"
-    android:layout_marginTop="40dp"
-    android:text="show_dialog" />
+        android:id="@+id/btnAddNote2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="20dp"
+        android:background="#fff"
+        android:src="@drawable/plus"
+        android:text="show_dialog"
+        android:visibility="visible" />
 
     <ImageButton
         android:id="@+id/btnDeleteAll"
@@ -74,5 +74,13 @@
         android:textColor="#000"
         android:textSize="18dp"
         android:visibility="gone" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/NotesList"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/MyNotes"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </RelativeLayout>
