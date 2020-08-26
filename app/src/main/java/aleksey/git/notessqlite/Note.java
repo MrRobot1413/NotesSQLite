@@ -3,9 +3,9 @@ package aleksey.git.notessqlite;
 public class Note {
     private String note;
     private String time;
-    private int id;
+    private String id;
 
-    public Note(String note, String time, int id){
+    public Note(String note, String time, String id){
         this.note=note;
         this.time = time;
         this.id = id;
@@ -27,11 +27,11 @@ public class Note {
         this.time = time;
     }
 
-    public int getId() {
+    public String getId() {
         return this.id;
     }
 
-    public void setImage(int id) {
+    public void setImage(String id) {
         this.id = id;
     }
 }

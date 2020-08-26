@@ -77,9 +77,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/NotesList"
-        android:layout_centerHorizontal="true"
         android:layout_below="@id/MyNotes"
-
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

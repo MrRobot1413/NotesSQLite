@@ -2,6 +2,8 @@ package aleksey.git.notessqlite;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.ContentValues;
@@ -148,8 +150,10 @@ public class MainActivity extends AppCompatActivity {
         }
         setData();
         NotesList = findViewById(R.id.NotesList);
+        NotesList.setHasFixedSize(true);
+        NotesList.setLayoutManager(new LinearLayoutManager(this));
+        NotesList.setItemAnimator(new DefaultItemAnimator());
         adapter = new DataAdapter(this, notes);
-        NotesList.setAdapter(adapter);
     }
 
     public void delete(){
@@ -170,10 +174,10 @@ public class MainActivity extends AppCompatActivity {
 //    }
 
     public void addNote(){
-            contentValues.put(DBHelper.NOTE, note.getEditText().getText().toString());
-            contentValues.put(DBHelper.TIME, formatter.format(date));
-            database.insert(DBHelper.TABLE_NAME, null, contentValues);
-            database.update(DBHelper.TABLE_NAME, contentValues, null, null);
+        contentValues.put(DBHelper.NOTE, note.getEditText().getText().toString());
+        contentValues.put(DBHelper.TIME, formatter.format(date));
+        database.insert(DBHelper.TABLE_NAME, null, contentValues);
+        database.update(DBHelper.TABLE_NAME, contentValues, null, null);
     }
 
     public void dataToConsole(){
@@ -197,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
             int idIndex = cursor.getColumnIndex(DBHelper.ID);
             int noteIndex = cursor.getColumnIndex(DBHelper.NOTE);
             int timeIndex = cursor.getColumnIndex(DBHelper.TIME);
-            notes.add(new Note(cursor.getString(noteIndex), cursor.getString(timeIndex), cursor.getInt(idIndex)));
+            notes.add(new Note(cursor.getString(noteIndex), cursor.getString(timeIndex), cursor.getString(idIndex)));
         }
     }
 }
