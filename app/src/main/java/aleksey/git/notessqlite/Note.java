@@ -31,7 +31,7 @@ public class Note {
         return this.id;
     }
 
-    public void setImage(String id) {
+    public void setId(String id) {
         this.id = id;
     }
 }

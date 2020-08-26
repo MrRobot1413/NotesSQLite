@@ -8,8 +8,8 @@
         android:id="@+id/id"
         android:textColor="#000"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="-5dp"
-        android:textSize="38dp"
+        android:layout_marginTop="11dp"
+        android:textSize="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"  />
 
@@ -21,6 +21,7 @@
         <TextView
             android:id="@+id/note"
             android:textColor="#000"
+            android:textSize="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"  />
 

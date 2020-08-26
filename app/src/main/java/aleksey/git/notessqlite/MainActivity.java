@@ -154,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
         NotesList.setLayoutManager(new LinearLayoutManager(this));
         NotesList.setItemAnimator(new DefaultItemAnimator());
         adapter = new DataAdapter(this, notes);
+        NotesList.setAdapter(adapter);
     }
 
     public void delete(){
